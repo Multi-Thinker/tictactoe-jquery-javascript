@@ -1,0 +1,389 @@
+<style>
+body {
+  background: #d3dff0;
+}
+.board {
+  background: #efefef;
+  margin: 50px auto;
+  width: 450px;
+  height: 450px;
+  padding: 0px;
+  box-shadow: 0px 0px 10px 0px grey;
+}
+.line {
+  height: 150px;
+  width: 450px;
+  border-bottom: 1px solid lightgrey;
+}
+.block {
+  cursor: pointer;
+  width: 148px;
+  height: 150px;
+  float: left;
+  text-align: center;
+  margin: 0 auto;
+  transition: 200ms;
+  position: relative;
+  overflow: hidden;
+}
+.block:hover {
+  background: #fff;
+  transition: 200ms;
+  width: 150px;
+  top: 0;
+}
+.block.border {
+  border-right: 1px solid lightgrey;
+}
+.line.border {
+  border: 0px none;
+}
+.circle {
+  cursor: pointer;
+  border-radius: 100%;
+  display: inline-block;
+  height: 135px;
+  margin: 0 auto;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 135px;
+  width: 135px;
+  border: 5px dashed #5f0e78;
+  color: #5f0e78;
+  animation: rotate 300ms linear infinite;
+}
+
+.cross:before {
+  content: "";
+  height: 150px;
+  width: 0px;
+  position: absolute;
+  top: 0px;
+  background: linear-gradient(to bottom, #fff 10%, #f67777 100%);
+  background-size: 5px;
+  outline: 2px dashed #fff;
+  box-shadow: 0 0 0 2px #f67777;
+  animation: 300ms line linear infinite;
+  transform: rotate(45deg);
+  transition: 200ms;
+}
+.cross:after {
+  content: "";
+  height: 150px;
+  width: 0px;
+  position: absolute;
+  top: 0px;
+  background: linear-gradient(to bottom, #fff 10%, #f67777 100%);
+  background-size: 1px;
+  outline: 2px dashed #fff;
+  box-shadow: 0 0 0 2px #f67777;
+  animation: 300ms line linear infinite;
+  transform: rotate(-45deg);
+  transition: 200ms;
+}
+a {
+  color: #fff;
+}
+.heading,
+.footer {
+  width: 100%;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+}
+.block:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  background: linear-gradient(104deg, #251aed, #fc3a06);
+  background-size: 400% 400%;
+  -webkit-animation: colorline 2s ease infinite;
+  -moz-animation: colorline 2s ease infinite;
+  -o-animation: colorline 2s ease infinite;
+  animation: colorline 2s ease infinite;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  transition: 200ms;
+  z-index: 1;
+}
+.block.mark-l:before {
+  transform: rotate(-45deg);
+  left: 70px;
+  bottom: 0px;
+  height: 150px;
+  width: 10px;
+  transition: 200ms;
+}
+
+.block.mark-r:before {
+  transform: rotate(45deg);
+  left: 70px;
+  bottom: 0px;
+  width: 10px;
+  height: 150px;
+  transition: 200ms;
+}
+.block.mark-s:before {
+  width: 150px;
+  transition: 200ms;
+  bottom: 70px;
+  left: 0;
+  height: 10px;
+}
+
+.block.mark-c:before {
+  bottom: 0px;
+  left: 70px;
+  height: 150px;
+  width: 10px;
+  transition: 200ms;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes line {
+  to {
+    outline-color: #f67777;
+    box-shadow: 0 0 0px 3px #fff;
+  }
+}
+@-webkit-keyframes colorline {
+  0% {
+    background-position: 0% 43%;
+  }
+  50% {
+    background-position: 100% 58%;
+  }
+  100% {
+    background-position: 0% 43%;
+  }
+}
+@-moz-keyframes colorline {
+  0% {
+    background-position: 0% 43%;
+  }
+  50% {
+    background-position: 100% 58%;
+  }
+  100% {
+    background-position: 0% 43%;
+  }
+}
+@-o-keyframes colorline {
+  0% {
+    background-position: 0% 43%;
+  }
+  50% {
+    background-position: 100% 58%;
+  }
+  100% {
+    background-position: 0% 43%;
+  }
+}
+@keyframes colorline {
+  0% {
+    background-position: 0% 43%;
+  }
+  50% {
+    background-position: 100% 58%;
+  }
+  100% {
+    background-position: 0% 43%;
+  }
+}
+
+</style>
+<div class="heading">
+  <h1>Tic Tac Toe</h1>
+
+</div>
+<div class="board">
+  <div class="line" data-row="1">
+    <div class="block border" data-child="1" data-parent="1"></div>
+    <div class="block border" data-child="2" data-parent="1"></div>
+    <div class="block" data-child="3" data-parent="1"></div>
+  </div>
+  <div class="line" data-row="2">
+    <div class="block border" data-child="1" data-parent="2"></div>
+    <div class="block border" data-child="2" data-parent="2"></div>
+    <div class="block" data-child="3" data-parent="2"></div>
+  </div>
+  <div class="line border" data-row="3">
+    <div class="block border" data-child="1" data-parent="3"></div>
+    <div class="block border" data-child="2" data-parent="3">
+
+    </div>
+    <div class="block" data-child="3" data-parent="3">
+
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <a href="https://twitter.com/iMultiThinker"><img src="https://sfcdn.coinmall.com/images/twitter_logo.png" width="20">@iMultiThinker</a>
+</div>
+<script type="text/javascript" src='./jquery.js'></script>
+<script type="text/javascript" src='./underscore.js'></script>
+<script type="text/javascript" src='./alertify.js'></script>
+
+<script>
+var turn = "circle";
+var winMoves = [];
+
+winMoves[0] = "1:3,2:2,3:1"; // r
+winMoves[1] = "1:1,2:2,3:3"; // l
+winMoves[2] = "1:1,2:1,3:1"; // s
+winMoves[3] = "1:2,2:2,3:2"; // s
+winMoves[4] = "1:3,2:3,3:3"; // s
+winMoves[5] = "1:1,1:2,1:3"; // c
+winMoves[6] = "2:1,2:2,2:3"; // c
+winMoves[7] = "3:1,3:2,3:3"; // c
+
+var draw = [];
+draw[0] = "r";
+draw[1] = "l";
+draw[2] = "s";
+draw[3] = "s";
+draw[4] = "s";
+draw[5] = "c";
+draw[6] = "c";
+draw[7] = "c";
+
+var moves = [];
+var newMoves = [];
+var count = 0;
+var audioElement;
+
+$(function() {
+  audioElement = document.createElement("audio");
+  audioElement.setAttribute(
+    "src",
+    "./move.mp3"
+  );
+});
+$(".block").click(function() {
+
+
+  if (
+    $(this).find("span").length == 0 &&
+    $(this).hasClass("disabled") == false
+  ) {
+    if (turn == "circle") {
+      turn = "cross";
+    } else {
+      turn = "circle";
+    }
+
+    $(this).html("<span class='" + turn + "'></span>");
+    if($(".block").find("span").length==9 &&
+     $(".block").hasClass("mark-l mark-s mark-c mark-r")==false){
+
+         console.log("game over");
+         audioElement.setAttribute(
+           "src",
+           "./noti.mp3"
+         );
+
+         audioElement.play();
+         $(".block").addClass("disabled");
+
+         // confirm dialog
+         alertify.confirm(
+           "Do you wish to play again?",
+           function() {
+             $(".block").empty();
+             $(".block").removeClass("mark-s mark-c mark-r mark-l disabled");
+               audioElement.setAttribute(
+     "src",
+     "./move.mp3"
+   );
+           },
+           function() {
+             // user clicked "cancel"
+           }
+         );
+         alertify.alert("Game over, Its A Draw!");
+    }
+    audioElement.play();
+  } else {
+    return false;
+  }
+  alertify.log("Last mode played by " + turn);
+
+  if ($("." + turn).length >= 3) {
+    var temp = [];
+    $("." + turn).each(function() {
+      temp[count] =
+        "" +
+        $(this)
+          .parent()
+          .attr("data-child") +
+        ":" +
+        $(this)
+          .parent()
+          .parent()
+          .attr("data-row");
+      console.log($(this).parent());
+      console.log(
+        $(this)
+          .parent()
+          .attr("data-child")
+      );
+      count++;
+    });
+
+
+
+    for (var i = 0; i <= winMoves.length; i++) {
+      var tempAr = winMoves[i].split(",");
+      if (_.intersection(tempAr, temp).length == 3) {
+        console.log(i + " got one ");
+        console.log("draw is " + draw[i]);
+        console.log("draw on " + winMoves[i]);
+        var DrawOn = winMoves[i].split(",");
+        for (var j = 0; j <= 2; j++) {
+          var parent = DrawOn[j].split(":")[1];
+          var child = DrawOn[j].split(":")[0];
+          $(
+            ".block[data-child='" + child + "'][data-parent='" + parent + "']"
+          ).addClass("mark-" + draw[i]);
+        }
+
+        console.log("game over");
+        audioElement.setAttribute(
+          "src",
+          "./noti.mp3"
+        );
+
+        audioElement.play();
+        $(".block").addClass("disabled");
+
+        // confirm dialog
+        alertify.confirm(
+          "Do you wish to play again?",
+          function() {
+            $(".block").empty();
+            $(".block").removeClass("mark-s mark-c mark-r mark-l disabled");
+              audioElement.setAttribute(
+    "src",
+    "./move.mp3"
+  );
+          },
+          function() {
+            // user clicked "cancel"
+          }
+        );
+        alertify.alert("Game over, " + turn + " Wins!");
+      }
+    }
+  }
+
+
+
+});
+</script>
